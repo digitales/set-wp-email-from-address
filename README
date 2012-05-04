@@ -13,7 +13,7 @@ This plugin recreates the wp_mail function to correctly set the Return-Path, Fro
 
 == Installation ==
 
-1. Upload the entire `set-wp-form-address` folder to the `/wp-content/plugins/` directory.
+1. Upload the entire `set-wp-email-form-address` folder to the `/wp-content/plugins/` directory.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
 
 
