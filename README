@@ -1,0 +1,30 @@
+===  Set WP from address ===
+Contributors: ross_tweedie
+Tags: email
+Requires at least: 3.2
+Tested up to: 3.3.2
+Stable tag: 3.2
+
+Uses admin_email address and site name as the from address when sending emails through WordPress
+
+== Description ==
+
+This plugin recreates the wp_mail function to correctly set the Return-Path, From address, From name, and ReplyTo email headers. It takes the settings from the admin_email and site name.
+
+== Installation ==
+
+1. Upload the entire `set-wp-form-address` folder to the `/wp-content/plugins/` directory.
+1. Activate the plugin through the 'Plugins' menu in WordPress.
+
+
+== Frequently Asked Questions ==
+
+
+== Changelog ==
+
+= 1.0 =
+* Initial version of the plugin
+
+== Upgrade Notice ==
+
+The current version of Set Wp from address requires WordPress 3.2 or higher.
