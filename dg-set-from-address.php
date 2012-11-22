@@ -16,7 +16,7 @@ class SetFromHeaders
     function init(){
         add_filter( 'wp_mail_from', array( &$this, 'set_from_address') );
         add_filter( 'wp_mail_from_name', array( &$this, 'set_from_name' ) );
-        // add_filter( 'wp_mail', array( &$this, 'set_headers' ) );
+        add_filter( 'wp_mail', array( &$this, 'set_headers' ) );
     }
 
     function install(){
@@ -53,8 +53,8 @@ class SetFromHeaders
 
     function set_headers( $data = null ){
 
-        $returnPath = 'Return-Path: '. self::set_from_address() ;
-        $replyTo    = 'ReplyTo: '. self::set_from_address() ;
+        $returnPath = 'Return-Path: ' . self::set_from_address() ;
+        $replyTo    = 'Reply-To: ' . self::set_from_address() ;
 
         $headers = $data['headers'];
 
@@ -75,6 +75,10 @@ class SetFromHeaders
                 $tempHeaders[ $headerRow ] = $replyTo;
                 unset( $replyTo );
             }
+            if ( strpos( $headerValue, strtolower( 'replyto' ) ) === true ){
+                $tempHeaders[ $headerRow ] = $replyTo;
+                unset( $replyTo );
+            }
         }
 
         // If the return path hasn't been specified, it's time to do it now.
@@ -83,10 +87,11 @@ class SetFromHeaders
         }
 
         if ( $replyTo ){
-            $tempHeaders[] = $replyTo;
+            $tempHeaders['Reply-To'] = $replyTo;
         }
 
         $data['headers'] = $tempHeaders;
+
         return $data;
     }
 
@@ -95,6 +100,8 @@ class SetFromHeaders
 
 $setFromHeaders = new SetFromHeaders;
 $setFromHeaders->init();
+
+
 
 /**
  * Send mail, similar to PHP's mail
@@ -132,7 +139,7 @@ $setFromHeaders->init();
  * @param string|array $attachments Optional. Files to attach.
  * @return bool Whether the email contents were sent successfully.
  */
-function wp_mail( $to, $subject, $message, $headers = '', $attachments = array() ) {
+function wp_mail2( $to, $subject, $message, $headers = '', $attachments = array() ) {
 	// Compact the input, apply the filters, and extract them back out
 	extract( apply_filters( 'wp_mail', compact( 'to', 'subject', 'message', 'headers', 'attachments' ) ) );
 
